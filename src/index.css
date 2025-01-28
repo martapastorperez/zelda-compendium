@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+
+@font-face {
+    font-family: 'zelda-wild';
+    src: url('/tipografy/The-Wild-Breath-of-Zelda.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+  
+@font-face {
+    font-family: 'zelda-wild';
+    src: url('/tipografy/The-Wild-Breath-of-Zelda.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+ 
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'zelda-wild';
+    color:white
+}
+
+p{
+    color: white;
+}
+
+body{background-color: rgb(36, 36, 36);}
+
