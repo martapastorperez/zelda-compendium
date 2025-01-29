@@ -1,7 +1,16 @@
 
 import './App.css'
+import useEntrys from './hooks/useEntry';
+import { DashboardView } from './views/DashboardView';
 
 function App() {
+
+  const { isLoading, error } = useEntrys();
+
+
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <>
@@ -14,7 +23,9 @@ function App() {
       </div>
     </header>
     <div className="relative z-10 h-[calc(100vh-6rem)] p-8 overflow-hidden">
-      <p>Dashboard o search</p>
+    <ul>
+        <DashboardView/>
+      </ul>
     </div>
   </>
   )
