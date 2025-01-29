@@ -10,17 +10,15 @@ export default function useEntrys(){
     const [data, setData] = useState<Entry[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string>();
+    const [filteredEntries, setFilteredEntries] = useState<Entry[]>([]);
+
   
     useEffect(() => {
       const fetchData = async () => {
         try {
           setIsLoading(true);
-          const response = await axios.get(entryUrl);
-          console.log(response.data);
-          
-          setData(response.data.data); // Guardar los datos obtenidos
-          console.log(data,'aaas');
-          
+          const response = await axios.get(entryUrl);          
+          setData(response.data.data);
         } catch (error) {
           setError("An unknown error occurred");
         } finally {
@@ -45,8 +43,19 @@ export default function useEntrys(){
     }
 
 
+    // Función para filtrar resultados basado en una query
+    const filterEntries = (query: string):Entry[] => {
+        const lowerQuery = query.toLowerCase();
+        const filtered = data.filter(
+            (entry) =>
+                entry.name.toLowerCase().includes(lowerQuery) ||
+                entry.id.toString().includes(lowerQuery)
+        );
+        setFilteredEntries(filtered);
+        return filtered
+    };
 
   
-    return { data, isLoading, error, getEntryByCategory, getEntryById };
+    return { data, isLoading, error, getEntryByCategory, getEntryById , filterEntries, filteredEntries};
   }
   
