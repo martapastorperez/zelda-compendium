@@ -4,17 +4,23 @@ import { Entries } from "../components/Entries";
 import { categories } from "../constants/CategoriesData";
 import useEntrys from "../hooks/useEntry"
 import { Category, Entry } from "../types";
-
+import { EntriesDetails } from "../components/EntriesDetails";
 
 
 export const DashboardView = () => {
 
-    const {data, isLoading, error, getEntryByCategory} = useEntrys()
+    const {isLoading, error, getEntryByCategory, getEntryById} = useEntrys()
     const [categoryEntries, setCategoryEntries] = useState<Entry[]>([]);
+    const [IdEntries, setIdEntries] = useState<Entry>();
 
     const handleCategorySelect = (category: Category) => {
         const categoryEntries = getEntryByCategory(category);
         setCategoryEntries(categoryEntries)
+    }
+
+    const getEntryId = (id: Entry['id']) => { 
+        const idEntries = getEntryById(id)
+        setIdEntries(idEntries)
     }
 
     if (isLoading) return <p>Loading...</p>;
@@ -36,21 +42,21 @@ export const DashboardView = () => {
             ))}
         </div>
 
-        {/* Entradas */}
-        <div className="h-5/6 grid grid-cols-2 gap-4">
-           
-            <div className="grid grid-cols-4 gap-4  overflow-y-scroll ">
-                {categoryEntries.map((entries) => (
-                <Entries
-                    key={entries.id} 
-                    categoryEntries={entries}
-                />
-                ))}
-            </div>
-
-            {/* Detalles de la entrada */}
+        <div className="h-[70vh] grid grid-cols-2 gap-4">
+            {categoryEntries.length > 0 &&
+                <div className="grid grid-cols-4 gap-4  overflow-y-scroll">
+                    {categoryEntries.map((entries) => (
+                    <Entries
+                        key={entries.id} 
+                        categoryEntries={entries}
+                        getEntryId={getEntryId}
+                    />
+                    ))}
+                </div>
+            }
+            
             <div>
-           
+            {IdEntries && <EntriesDetails key={IdEntries.id} entryDetails={IdEntries} />}
             </div>
         </div>
     </>

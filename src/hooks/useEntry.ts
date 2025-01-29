@@ -33,14 +33,20 @@ export default function useEntrys(){
 
 
     const getEntryByCategory=(category:Category):Entry[]=>{
-       
         return data.filter((entry) => entry.category === category);
-        
+    }
+
+    const getEntryById=(id:Entry['id']):Entry=>{
+        const entry= data.find((entry) => entry.id === id);
+        if (!entry) {
+            throw new Error(`Entry with ID ${id} not found`);
+        }
+        return entry;
     }
 
 
 
   
-    return { data, isLoading, error, getEntryByCategory };
+    return { data, isLoading, error, getEntryByCategory, getEntryById };
   }
   
