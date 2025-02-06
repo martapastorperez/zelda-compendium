@@ -5,7 +5,7 @@ type EntriesDetailsProps = {
     entryDetails: Entry
 }
 
-export const EntriesDetails = ({entryDetails}:EntriesDetailsProps) => {
+export const EntriesDetails = ({ entryDetails }: EntriesDetailsProps) => {
 
     const { AddToFavs, favs } = useEntrys()
 
@@ -42,18 +42,22 @@ export const EntriesDetails = ({entryDetails}:EntriesDetailsProps) => {
                     <h1 className="text-white text-5xl">{entryDetails.name}</h1>
                     <p className="text-white">{entryDetails.description}</p>
                     <div className="grid grid-cols-2 pt-5">
-                        <div>
-                            <h1 className="text-white text-3xl">Common Locations</h1>
-                            {entryDetails.common_locations?.map(locations => (
-                                <p key={locations} className="text-white">{locations}</p>
-                            ))}
-                        </div>
-                        <div>
-                            <h1 className="text-white text-3xl">Droppable Items</h1>
-                            {entryDetails.drops?.map(drop => (
-                                <p key={drop} className="text-white">{drop}</p>
-                            ))}
-                        </div>
+                        {entryDetails.common_locations && entryDetails.common_locations.length > 0 && (
+                            <div>
+                                <h1 className="text-white text-3xl">Common Locations</h1>
+                                {entryDetails.common_locations?.map(locations => (
+                                    <p key={locations} className="text-white">{locations}</p>
+                                ))}
+                            </div>
+                        )}
+                        {entryDetails.drops && entryDetails.drops.length > 0 && (
+                            <div>
+                                <h1 className="text-white text-3xl">Droppable Items</h1>
+                                {entryDetails.drops?.map(drop => (
+                                    <p key={drop} className="text-white">{drop}</p>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
