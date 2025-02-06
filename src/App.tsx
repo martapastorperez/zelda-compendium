@@ -1,45 +1,49 @@
-
-import { useState } from 'react' 
+import { useState } from 'react'
 import './App.css'
-import useEntrys from './hooks/useEntry' 
-import { DashboardView } from './views/DashboardView' 
-import { SearchView } from './views/SearchView' 
-import { ModalFavorites } from './components/ModalFavorites' 
+import useEntrys from './hooks/useEntry'
+import { DashboardView } from './views/DashboardView'
+import { SearchView } from './views/SearchView'
+import { ModalFavorites } from './components/ModalFavorites'
+import { ClipLoader } from 'react-spinners'
 
 
 function App() {
 
-  const { data, isLoading, error, filterEntries, filteredEntries, filterSort} = useEntrys() 
-  const [isSearchVisible, setIsSearchVisible] = useState(false) 
-  const [searchQuery, setSearchQuery] = useState("") 
-  const [isOpen, setIsOpen] = useState(false) 
+  const { data, isLoading, error, filterEntries, filteredEntries, filterSort } = useEntrys()
+  const [isSearchVisible, setIsSearchVisible] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [isOpen, setIsOpen] = useState(false)
 
 
   const handleSearchToggle = () => {
-    setIsSearchVisible(!isSearchVisible) 
-  } 
+    setIsSearchVisible(!isSearchVisible)
+  }
 
   const handleFavorite = () => {
     setIsOpen(true)
-  } 
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value 
-    setSearchQuery(query) 
-    filterEntries(query) 
-  } 
+    const query = e.target.value
+    setSearchQuery(query)
+    filterEntries(query)
+  }
 
   const handleFilterSort = () => {
-    if (filteredEntries.length>0) {
-      filterSort(filteredEntries)  
+    if (filteredEntries.length > 0) {
+      filterSort(filteredEntries)
     } else {
-      filterSort(data)  
+      filterSort(data)
     }
-  } 
+  }
 
-  
-  if (isLoading) return <p>Loading...</p> 
-  if (error) return <p>Error: {error}</p> 
+  if (isLoading) return (
+    <div className="flex justify-center items-center h-screen">
+      <ClipLoader color='#ffffff' />
+    </div>
+  )
+
+  if (error) return <p>Error: {error}</p>
 
   return (
     <>
@@ -61,7 +65,7 @@ function App() {
           <div className="flex gap-7">
             <img src="/icons/search.png" className="w-6 opacity-50 hover:opacity-100 transition-all" onClick={handleSearchToggle} />
             {isSearchVisible && (
-            <img src="/icons/sort-arrows.png" className="w-6  opacity-50 hover:opacity-100 transition-all" onClick={handleFilterSort} />)}
+              <img src="/icons/sort-arrows.png" className="w-6  opacity-50 hover:opacity-100 transition-all" onClick={handleFilterSort} />)}
             <img src="/icons/heart.png" className="w-6 opacity-50 hover:opacity-100 transition-all" onClick={handleFavorite} />
             <ModalFavorites isOpen={isOpen}
               setIsOpen={setIsOpen} />
