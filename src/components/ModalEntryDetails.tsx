@@ -1,17 +1,42 @@
-import { Dialog, DialogPanel} from "@headlessui/react";
-import { Entry } from "../types";
+import { Dialog, DialogPanel} from "@headlessui/react"
+import { Entry } from "../types"
+import useEntrys from "../hooks/useEntry"
 
 type ModalEntriesDetailsProps = {
-  entryDetails: Entry;
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-};
+  entryDetails: Entry
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+}
 
 export const ModalEntryDetails = ({ entryDetails, isOpen, setIsOpen }: ModalEntriesDetailsProps) => {
+  
+  const { AddToFavs, favs } = useEntrys()
+
+  const isFav = favs.some((fav) => fav.id === entryDetails.id);
+
+  const handleClick = (entryDetails: Entry) => {
+    AddToFavs(entryDetails)
+}
+
   return (
     <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
       <div className="fixed inset-0 flex items-center justify-center p-4 bg-black/40">
         <DialogPanel className="w-[90vh] space-y-4 border border-white/20 bg-black/90 p-10 shadow-lg">
+        <div className="flex justify-end">
+                <svg
+                    onClick={() => handleClick(entryDetails)}
+                    className={`w-8 h-auto cursor-pointer transition-all hover:scale-110 ${isFav ? "text-red-500" : "text-white opacity-55 hover:opacity-100"}`}
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        fillRule="evenodd"
+                        d="M12 4.248c-3.148-5.402-12-2.912-12 3.192 0 4.48 5.373 7.978 12 14.56 6.627-6.582 12-10.08 12-14.56 0-6.104-8.852-8.594-12-3.192z"
+                        clipRule="evenodd"
+                    />
+                </svg>
+            </div>
           <div className="flex gap-6">
             {/* Imagen de la entrada */}
             <img src={entryDetails.image} alt={entryDetails.name} className="w-full h-auto" />

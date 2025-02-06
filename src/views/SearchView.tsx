@@ -1,25 +1,24 @@
-import { useState } from "react";
-import { Entries } from "../components/Entries";
-import useEntrys from "../hooks/useEntry";
-import { Entry } from "../types";
-import { ModalEntryDetails } from "../components/ModalEntryDetails";
+import { useState } from "react" 
+import { Entries } from "../components/Entries" 
+import useEntrys from "../hooks/useEntry" 
+import { Entry } from "../types" 
+import { ModalEntryDetails } from "../components/ModalEntryDetails" 
 
 type SearchViewProps = {
-  filteredEntries: Entry[];
-};
+  filteredEntries: Entry[] 
+} 
 
 export const SearchView = ({ filteredEntries }: SearchViewProps) => {
-  const [IdEntries, setIdEntries] = useState<Entry | null>(null);
-  const [isOpen, setIsOpen] = useState(false); 
+  const [IdEntries, setIdEntries] = useState<Entry | null>(null) 
+  const [isOpen, setIsOpen] = useState(false)  
 
-  const { data, getEntryById } = useEntrys();
+  const { data, getEntryById } = useEntrys() 
 
   const getEntryId = (id: Entry["id"]) => {
-    const entry = getEntryById(id);
-    setIdEntries(entry);
-    console.log(entry);
-    setIsOpen(true);
-  };
+    const entry = getEntryById(id) 
+    setIdEntries(entry) 
+    setIsOpen(true) 
+  } 
 
   return (
     <>
@@ -44,5 +43,5 @@ export const SearchView = ({ filteredEntries }: SearchViewProps) => {
         />
       )}
     </>
-  );
-};
+  ) 
+} 
